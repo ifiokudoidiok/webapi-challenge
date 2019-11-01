@@ -9,10 +9,33 @@ actionRouter.get('/', getAllActions);
 actionRouter.get('/:id',validateActionId, getActionByID);
 actionRouter.delete('/:id',validateActionId, deleteAction);
 actionRouter.put('/:id',validateActionId, validateAction, editAction);
+actionRouter.get('/:id/actions',validateProjectId, getActionsById);
+actionRouter.post('/:id/actions',validateProjectId,validateAction, createAction);
 
-actionRouter.get('/projects/:id',validateProjectId, validateActionId, getActionByProjectID)//hold that thought
-function getActionByProjectID(req, res) {
-    res.json(req.action);
+function getActionsById(req, res) {
+    dbProject.get(req.project.id).then(actions => {
+        res.status(200).json(actions)
+    })
+    .catch(error => {
+        res.status(500).json(error)
+    })
+}
+
+function createAction(req, res) {
+    
+        const { description, notes, completed } = req.body;
+        dbAction.insert({
+          project_id: req.project.id,
+          description,
+          notes,
+          completed
+        }).then(action => {
+          res.status(201).json(action);
+        }).catch(error => {
+            res.status(500).json(error)
+        });
+    
+   
 }
 function editAction(req, res) {
     dbAction.update(req.action.id, req.body)
