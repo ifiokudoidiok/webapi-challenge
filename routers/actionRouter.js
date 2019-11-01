@@ -10,7 +10,7 @@ actionRouter.get('/:id',validateActionId, getActionByID);
 actionRouter.delete('/:id',validateActionId, deleteAction);
 actionRouter.put('/:id',validateActionId, validateAction, editAction);
 actionRouter.get('/:id/actions',validateProjectId, getActionsById);
-actionRouter.post('/:id/actions',validateProjectId,validateAction, createAction);
+actionRouter.post('/:id/',validateProjectId,validateAction, createAction);
 
 function getActionsById(req, res) {
     dbProject.get(req.project.id).then(actions => {
