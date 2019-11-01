@@ -90,7 +90,7 @@ function validateProjectId(req, res, next) {
 
 function validateProject(req, res, next) {
     if (Object.keys(req.body).length) {
-        if(req.body){//It still has a bug, fix if you have the time.
+        if(req.body.name && req.body.description){
             next();
 
         }
