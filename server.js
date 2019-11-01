@@ -10,7 +10,7 @@ server.use(helmet());
 
 server.use(express.json());
 
-// server.use("/actions", logger, actionRouter);
+server.use("/actions", logger, actionRouter);
 server.use("/projects", logger, projectRouter);
 
 server.get("/", logger, (req, res) => {
