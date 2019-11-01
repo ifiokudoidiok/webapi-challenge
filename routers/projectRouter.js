@@ -8,6 +8,19 @@ projectRouter.get('/', getAllProjects);
 projectRouter.post('/', validateProject, addProject);
 projectRouter.get('/:id',validateProjectId, getProjectById);
 projectRouter.delete('/:id',validateProjectId, deleteProject);
+projectRouter.put('/:id',validateProject,validateProjectId, updateProject);
+
+function updateProject(req, res) {
+    dbProject.update(req.project.id, req.body)
+.then(project => {
+    res.status(200).json({...req.project, ...req.body})
+})
+.catch(error => {
+    res.status(500).json({
+        message: "Could not Update Project: " + error
+    })
+})
+}
 
 function getProjectById(req, res) {
     res.json(req.project);
