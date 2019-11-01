@@ -15,7 +15,19 @@ function getProjectById(req, res) {
 
 
 function deleteProject(req, res) {
-
+    dbProject.remove(req.project.id)
+    .then( () => {
+    res.status(200).json({
+        success:true,
+        message: "Successfully Deleted",
+    
+    deleted:req.project
+    })
+    })
+    .catch( error => {
+        res.status(500).json({
+            errorMessage: "Could not Delete, Server error: "+error})
+    })
 }
 
 function addProject(req, res) {
